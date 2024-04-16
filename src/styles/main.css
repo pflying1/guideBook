@@ -1,0 +1,33 @@
+.mainCss {
+  width:400px;
+  height:850px;
+  background-color: white;
+}
+.mainLogoCss {
+  margin-left: 5%;
+  margin-top: 5%;
+  width : 100%;
+  height: 10%;
+}
+.mainNavCss {
+  width : 100%;
+  height: 20%;
+}
+.mainBodyCss {
+  width : 100%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mainImageCss {
+  width : 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size : 100% 100%;
+}
+.mainImageButtonCss {
+  width: 120px;
+  height: 50px;
+  border-radius: 30px;
+}
