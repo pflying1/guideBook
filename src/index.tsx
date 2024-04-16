@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import Main from "./containers/main";
 import Page404 from "./containers/page404";
+//import Process from "dotenv";
+
 function Index() {
   return (
   <React.StrictMode>
