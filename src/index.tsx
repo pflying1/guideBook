@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import Main from "./containers/main";
 import Page404 from "./containers/page404";
+import MajagGuide from "./containers/majagGuide";
 //import Process from "dotenv";
 
 function Index() {
@@ -13,6 +14,7 @@ function Index() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/page404" element={<Page404 />} />
+        <Route path="/majagGuide" element={<MajagGuide />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
