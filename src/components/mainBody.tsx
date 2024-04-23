@@ -32,18 +32,11 @@ const MainBody: React.FC = () => {
       {guideBookList.map((guideBook, index) => (
         <div key={index}>
           <div className='mainTitleCss'>{guideBook.title}</div>
-          <div className='mainImageWrap' style={{
-                //backgroundImage: `url(${guideBook.imageUrl})`,
-                width: '600px', // 이미지 너비 설정
-                height: '250px', // 이미지 높이 설정
-                backgroundSize: 'cover', // 이미지를 컨테이너에 맞게 늘림
-                backgroundPosition: 'center', // 이미지를 가운데 정렬
-                backgroundRepeat: 'no-repeat' // 이미지 반복 없음
-              }}>
+          <div className='mainImageWrap'>
             <div
               className="mainImageCss"
               style={{
-                //backgroundImage: `url(${guideBook.imageUrl})`,
+                backgroundImage: `url(${guideBook.imageUrl})`,
                 width: '600px', // 이미지 너비 설정
                 height: '250px', // 이미지 높이 설정
                 backgroundSize: 'cover', // 이미지를 컨테이너에 맞게 늘림
