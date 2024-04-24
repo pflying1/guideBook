@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { Link } from "react-router-dom"
 import "../styles/main.css"
 
@@ -18,4 +18,4 @@ const mainImage :React.FC = () => {
   )
 }
 
-export default mainImage;
+export default mainImage; */
