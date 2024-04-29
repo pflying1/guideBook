@@ -5,8 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 // import { join } from 'path';
 // import { Servnumber | stringcModule } from '@nestjs/serve-static';
-import { UserModule } from './entities/user/user.module';
-import { UserEntity } from './entities/user/user.entity';
+import { UserModule } from './user/user.module';
+import { UserEntity } from './user/entities/user.entity';
 
 @Module({
   imports: [
