@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import "../styles/main.css";
-
 interface GuideBookInfo {
   title: string;
   imageUrl: string;
@@ -11,17 +10,17 @@ interface GuideBookInfo {
 const guideBookList: GuideBookInfo[] = [
   {
     title: '마작',
-    imageUrl: '../asset/majagpae34.png',
+    imageUrl: '/asset/majagpae34.png',
     guideLink: '/majagGuide'
   },
   {
     title: 'apex',
-    imageUrl: '../asset/apexIntro.png',
+    imageUrl: '/asset/apexIntro.png',
     guideLink: '/page404'
   },
   {
     title: '000',
-    imageUrl: '../asset/apexIntro.png',
+    imageUrl: '/asset/apexIntro.png',
     guideLink: '/page404'
   }
 ];
@@ -39,9 +38,9 @@ const MainBody: React.FC = () => {
                 backgroundImage: `url(${guideBook.imageUrl})`,
                 width: '600px', // 이미지 너비 설정
                 height: '250px', // 이미지 높이 설정
-                backgroundSize: 'cover', // 이미지를 컨테이너에 맞게 늘림
-                backgroundPosition: 'center', // 이미지를 가운데 정렬
-                backgroundRepeat: 'no-repeat' // 이미지 반복 없음
+                /* backgroundSize: 'cover', // 이미지를 컨테이너에 맞게 늘림 */
+                /* backgroundPosition: 'center', // 이미지를 가운데 정렬 */
+                backgroundRepeat: 'no-repeat' // 이미지 반복 없음 
               }}
             ></div>
           </div>
