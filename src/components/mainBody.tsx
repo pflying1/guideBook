@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import "../styles/main.css";
-
-// Importing images
 import majagpae34 from '../asset/majagpae34.png';
 import apexIntro from '../asset/apexIntro.png';
-// Assuming you have 'c.png' in the asset folder;
+
 
 interface GuideBookInfo {
   title: string;
