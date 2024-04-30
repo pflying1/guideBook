@@ -8,7 +8,7 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
   // 정적 파일 폴더 경로 설정
-  app.use(express.static(join(__dirname, 'public')));
+  app.use(express.static(join(__dirname, 'dist')));
 
   // CORS 설정
   app.enableCors();

@@ -16,4 +16,9 @@ export class AppController {
   getText(): string[] {
     return this.appService.getTest();
   }
+
+  @Get('hello')
+  getHello(): object {
+    return this.appService.getHello();
+  }
 }
