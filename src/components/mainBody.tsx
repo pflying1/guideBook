@@ -14,17 +14,17 @@ interface GuideBookInfo {
 const guideBookList: GuideBookInfo[] = [
   {
     title: '마작',
-    imageUrl: majagpae34, // Use imported image here
+    imageUrl: majagpae34, 
     guideLink: '/majagGuide'
   },
   {
     title: 'apex',
-    imageUrl: apexIntro, // Use imported image here
+    imageUrl: apexIntro, 
     guideLink: '/page404'
   },
   {
     title: '000',
-    imageUrl: apexIntro, // Use imported image here
+    imageUrl: apexIntro, 
     guideLink: '/page404'
   }
 ];
@@ -40,11 +40,11 @@ const MainBody: React.FC = () => {
               alt=''
               className="mainImageCss"
               style={{
-                width: '300px', // 이미지 너비 설정
-                height: '200px', // 이미지 높이 설정
-                backgroundSize: 'cover', // 이미지를 컨테이너에 맞게 늘림
-                backgroundPosition: 'center', // 이미지를 가운데 정렬
-                backgroundRepeat: 'no-repeat' // 이미지 반복 없음  */
+                width: '300px', 
+                height: '200px', 
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center', 
+                backgroundRepeat: 'no-repeat' 
                 }}
             />
           <div className="mainGuideButtonWrapCss">
