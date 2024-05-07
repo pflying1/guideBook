@@ -6,7 +6,6 @@ import Main from "./containers/main";
 import Page404 from "./containers/page404";
 import MajagGuide from "./containers/majagGuide";
 import SenbaKurono from "./containers/senbaKurono";
-import SenbaKuronoBody from "./components/senbaKuronoBody";
 //import Process from "dotenv";
 
 function Index() {
@@ -18,7 +17,7 @@ function Index() {
         <Route path="/page404" element={<Page404 />} />
         <Route path="/majagGuide" element={<MajagGuide />} />
         <Route path="/senbaKurono" element={<SenbaKurono />} />
-        <Route path="/senbaKurono/:chapter" element={<SenbaKuronoBody />} />
+        <Route path="/senbaKurono/:chapter" element={<SenbaKurono />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
