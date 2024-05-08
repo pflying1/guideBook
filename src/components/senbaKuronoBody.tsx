@@ -11,17 +11,17 @@ const senbaKuronoBodyList: senbaKuronoBodyInfo[] = [
   {
     index: "chapter1",
     title: "1장",
-    body: "test1",
+    body: "chapter1 테스트",
   },
   {
     index: "chapter2",
     title: "2장",
-    body: "test2",
+    body: "chapter2 테스트",
   },
   {
     index: "chapter3",
     title: "3장",
-    body: "test3",
+    body: "chapter3 테스트",
   },
 ];
 
