@@ -17,6 +17,7 @@ function Index() {
         <Route path="/page404" element={<Page404 />} />
         <Route path="/majagGuide" element={<MajagGuide />} />
         <Route path="/senbaKurono" element={<SenbaKurono />} />
+        <Route path="/senbaKurono/:chapter" element={<SenbaKurono />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

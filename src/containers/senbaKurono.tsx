@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import Logo from "../components/logo"
 import "../styles/senbaKurono.css"
 import SenbaKuronoBody from "../components/senbaKuronoBody"

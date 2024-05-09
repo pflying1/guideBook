@@ -9,15 +9,15 @@ interface majagGuideBodyInfo {
 const majagGuideBodyList: majagGuideBodyInfo[] = [
   {
     title: "1장",
-    majagGuideLink:"/senbakurono"
+    majagGuideLink:"/senbakurono/chapter1"
   },
   {
     title: "2장",
-    majagGuideLink:"/senbakurono"
+    majagGuideLink:"/senbakurono/chapter2"
   },
   {
     title: "3장",
-    majagGuideLink:"/senbakurono"
+    majagGuideLink:"/senbakurono/chapter3"
   },
 ]
 

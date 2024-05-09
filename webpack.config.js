@@ -55,6 +55,7 @@ module.exports = {
     publicPath: '/',
   },
   devServer: isDevelopment ? {
+    historyApiFallback: true,
     static: {
       directory: path.join(__dirname, 'dist'),
     },
