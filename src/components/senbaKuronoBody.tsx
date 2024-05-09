@@ -35,8 +35,8 @@ const SenbaKuronoBody: React.FC = () => {
     <div className="senbaKuronoCss">
       {currentChapterContent ? (
         <div>
-          <div>{currentChapterContent.title}</div>
-          <div>{currentChapterContent.body}</div>
+          <div className="senbaKuronoTitleCss">{currentChapterContent.title}</div>
+          <div className="senbaKuronoBodyCss">{currentChapterContent.body}</div>
         </div>
       ) : (
         <div>해당 장의 내용을 찾을 수 없습니다.</div>

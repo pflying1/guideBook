@@ -1,4 +1,13 @@
 .senbaKuronoCss{
+  width:1920px;
+  height: 1080px;
   background-color: white;
+}
+.senbaKuronoTitleCss{
+  font-size: 100px;
+}
+
+.senbaKuronoBodyCss{
+  font-size: 35px;
 }
 
