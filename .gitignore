@@ -4,3 +4,4 @@
 /public/
 /.github/
 Dockerfile
+.dockerignore
