@@ -28,15 +28,15 @@ const senbaKuronoBodyList: senbaKuronoBodyInfo[] = [
 const SenbaKuronoBody: React.FC = () => {
   const { chapter } = useParams<'chapter'>();
 
-  // 'index' 필드와 'chapter' 파라미터 값 비교
-  const currentChapterContent = senbaKuronoBodyList.find(item => item.index === chapter);
+  
+  const chapterMatchCheck = senbaKuronoBodyList.find(item => item.index === chapter);
 
   return (
     <div className="senbaKuronoCss">
-      {currentChapterContent ? (
+      {chapterMatchCheck ? (
         <div>
-          <div className="senbaKuronoTitleCss">{currentChapterContent.title}</div>
-          <div className="senbaKuronoBodyCss">{currentChapterContent.body}</div>
+          <div className="senbaKuronoTitleCss">{chapterMatchCheck.title}</div>
+          <div className="senbaKuronoBodyCss">{chapterMatchCheck.body}</div>
         </div>
       ) : (
         <div>해당 장의 내용을 찾을 수 없습니다.</div>

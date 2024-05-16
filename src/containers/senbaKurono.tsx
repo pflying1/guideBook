@@ -13,3 +13,6 @@ const senbaKurono:React.FC = () => {
 }
 
 export default senbaKurono;
+
+
+
