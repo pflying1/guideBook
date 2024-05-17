@@ -9,7 +9,7 @@ export class SenbakuroController {
 
   @Post()
   create(@Body() createSenbakuroDto: CreateSenbakuroDto) {
-    return this.senbakuroService.CreateSenbakuro(createSenbakuroDto);
+    return this.senbakuroService.createSenbakuro(createSenbakuroDto);
   }
 
   @Get()
