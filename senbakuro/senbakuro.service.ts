@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Senbakuro } from './entities/sebakuro.entity';
+import { Senbakuro } from './entities/senbakuro.entity';
 import { CreateSenbakuroDto } from './dto/createSenbakuro.dto'; // CreatesenbakuroDto를 사용하기 위해 import
 import { UpdateSenbakuroDto } from './dto/updateSenbakuro.dto';
 
