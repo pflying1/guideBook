@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsEmail, IsString, IsDate, IsOptional } from 'class-validator';
 
-export class CreateUserDto {
+export class CreateSenbakuroDto {
 
   @IsNotEmpty()
   @IsNumber()
