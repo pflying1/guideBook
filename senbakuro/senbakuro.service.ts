@@ -44,5 +44,7 @@ export class SenbakuroService {
       throw new NotFoundException(`senbakuro with ID "${id}" not found.`);
     }
   }
-}
+}  
+
+
 
