@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 // import { Servnumber | stringcModule } from '@nestjs/serve-static';
 import { UserModule } from './server/user/user.module';
 import { User } from './server/user/entities/user.entity';
-import { Senbakuro } from './server/senbakuro/entities/senbakuro.entity';
+import { GBAllSenbakuro } from './server/senbakuro/entities/GBAllSenbakuro.entity';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { Senbakuro } from './server/senbakuro/entities/senbakuro.entity';
         password: configService.get('NAS_DB_PASSWORD'),
         database: configService.get('NAS_DB_NAME'),
         synchronize: false,
-        entities: [User, Senbakuro],
+        entities: [User, GBAllSenbakuro],
       }),
     }),
   ],
