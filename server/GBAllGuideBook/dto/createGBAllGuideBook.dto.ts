@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString, IsDate } from 'class-validator';
 
-export class UpdateGBAllSenbakuroDto {
+export class CreateGBAllGuideBookDto {
 
   @IsNotEmpty()
   @IsNumber()
