@@ -5,12 +5,13 @@
   "main": "index.tsx",
   "scripts": {
     "start:dev": "webpack-dev-server --open --mode development",
-    "build:dev": "webpack --mode development",
+    "build": "webpack --mode development",
     "build:prod": "cross-env NODE_ENV=production webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint *.ts",
     "lint:fix": "eslint --fix *.ts",
     "prestart": "npm run lint:fix",
+    "startall": "webpack --mode development && ts-node main.ts",
     "start": "ts-node main.ts"
   },
   "repository": {

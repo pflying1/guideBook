@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Long } from 'typeorm';
 
 @Entity()
-export class GBAllSenbakuro {
+export class GBAllGuideBook {
   @PrimaryGeneratedColumn()
   GuideBookAllKey: number;
 
