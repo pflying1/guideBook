@@ -36,7 +36,12 @@ const MainBody: React.FC = () => {
           <div className='mainTitleCss'>{guideBook.GuideBookAllTitle}</div>
           <img 
               /* 이미지 지정 */
-              src={guideBook.GuideBookAllTitle === 'Majak' ? majagpae34: 'ApexLegend' ? apexIntro:apexIntro }
+              src={
+                guideBook.GuideBookAllTitle === 'Majak' 
+                ? majagpae34
+                :guideBook.GuideBookAllTitle === 'ApexLegend' 
+                ? apexIntro
+                :apexIntro }
               alt=''
               className="mainImageCss"
               style={{
@@ -49,7 +54,12 @@ const MainBody: React.FC = () => {
             />
           <div className="mainGuideButtonWrapCss">
             {/* 페이지 링크 지정 */}
-            <Link to={guideBook.GuideBookAllTitle === 'Majak' ? '/majagGuide' : 'ApexLegend' ? '/ApexLegendGuide' : '/page404'}> 
+            <Link to={
+              guideBook.GuideBookAllTitle === 'Majak' 
+                ? '/majagGuide' 
+                : guideBook.GuideBookAllTitle === 'ApexLegend' 
+                ? '/ApexLegendGuide' 
+                : '/page404'}> 
               <button className="mainImageButtonCss" style={{ border: "1px solid #457b9d", backgroundColor: "#457b9d", color: "white" }}> {guideBook.GuideBookAllTitle} 가이드북 </button>
             </Link>
           </div>
