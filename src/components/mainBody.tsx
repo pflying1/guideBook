@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import "../styles/main.css";
 import majagpae34 from '../asset/majagpae34.png';
@@ -6,37 +6,37 @@ import apexIntro from '../asset/apexIntro.png';
 
 
 interface GuideBookInfo {
-  title: string;
-  imageUrl: string;
-  guideLink: string;
+  GuideBookAllKey: number;
+  GuideBookAllTitle: string;
+  GuideBookAllContents: string | null;
+  updatedBy: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-const guideBookList: GuideBookInfo[] = [
-  {
-    title: '마작',
-    imageUrl: majagpae34, 
-    guideLink: '/majagGuide'
-  },
-  {
-    title: 'apex',
-    imageUrl: apexIntro, 
-    guideLink: '/page404'
-  },
-  {
-    title: '000',
-    imageUrl: apexIntro, 
-    guideLink: '/page404'
-  }
-];
-
 const MainBody: React.FC = () => {
+  const [guideBooks, setGuideBooks] = useState<GuideBookInfo[]>([]);
+
+  useEffect(() =>{
+    const fetchGuideBooks = async () => {
+      try{
+        const response = await fetch("http://localhost:8080/GBAllGuidebook");
+        const data = await response.json();
+        setGuideBooks(data);
+      } catch(error) {
+        console.log("데이터를 가져오지 못했습니다.",error);
+      }
+    };
+    fetchGuideBooks();
+  },[]);
   return (
     <div className="mainBodyCss">
-      {guideBookList.map((guideBook, index) => (
-        <div key={index}>
-          <div className='mainTitleCss'>{guideBook.title}</div>
+      {guideBooks.map((guideBook) => (
+        <div key={guideBook.GuideBookAllKey}>
+          <div className='mainTitleCss'>{guideBook.GuideBookAllTitle}</div>
           <img 
-              src={guideBook.imageUrl}
+              /* 이미지 지정 */
+              src={guideBook.GuideBookAllTitle === 'Majak' ? majagpae34: 'ApexLegend' ? apexIntro:apexIntro }
               alt=''
               className="mainImageCss"
               style={{
@@ -48,8 +48,9 @@ const MainBody: React.FC = () => {
                 }}
             />
           <div className="mainGuideButtonWrapCss">
-            <Link to={guideBook.guideLink}>
-              <button className="mainImageButtonCss" style={{ border: "1px solid #457b9d", backgroundColor: "#457b9d", color: "white" }}> {guideBook.title} 가이드북 </button>
+            {/* 페이지 링크 지정 */}
+            <Link to={guideBook.GuideBookAllTitle === 'Majak' ? '/majagGuide' : 'ApexLegend' ? '/ApexLegendGuide' : '/page404'}> 
+              <button className="mainImageButtonCss" style={{ border: "1px solid #457b9d", backgroundColor: "#457b9d", color: "white" }}> {guideBook.GuideBookAllTitle} 가이드북 </button>
             </Link>
           </div>
         </div>
