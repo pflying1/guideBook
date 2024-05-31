@@ -1,37 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-interface majagGuideBodyInfo {
-  title: string;
-  majagGuideLink: string;
+interface GuideBookInfo {
+  GuideBookAllKey: number;
+  GuideBookAllTitle: string;
+  GuideBookAllContents: string | null;
+  updatedBy: string;
+  createdAt: string;
+  updatedAt: string;
 }
-
-const majagGuideBodyList: majagGuideBodyInfo[] = [
-  {
-    title: "1장",
-    majagGuideLink:"/senbakurono/chapter1"
-  },
-  {
-    title: "2장",
-    majagGuideLink:"/senbakurono/chapter2"
-  },
-  {
-    title: "3장",
-    majagGuideLink:"/senbakurono/chapter3"
-  },
-]
-
 const majagGuideBody :React.FC = () => {
+
+  const [guideBooks, setGuideBooks] = useState<GuideBookInfo[]>([]);
+
+  useEffect(() =>{
+    const fetchGuideBooks = async () => {
+      try{
+        const response = await fetch("http://localhost:8080/GBAllGuidebook");
+        const data = await response.json();
+        setGuideBooks(data);
+      } catch(error) {
+        console.log("데이터를 가져오지 못했습니다.",error);
+      }
+    };
+    fetchGuideBooks();
+  },[]);
+
   return (
     <div className="majagGuideBodyCss">
       <div>마작 기초 가이드</div>
       <div>센바 쿠로노 강좌 공부노트</div>
-      {majagGuideBodyList.map((majagGuide, index) =>(
-        <div key= {index}>
-          <Link to={majagGuide.majagGuideLink}>
-            <button className="mainImageButtonCss" style={{ border: "1px solid #457b9d", backgroundColor: "#457b9d", color: "white" }}>{majagGuide.title}</button>
+      {guideBooks.map((guideBook) =>(
+          <Link to={`/senbakurono/chapter${guideBook.GuideBookAllKey}`}>
+            <button className="mainImageButtonCss" style={{ border: "1px solid #457b9d", backgroundColor: "#457b9d", color: "white" }}>{guideBook.GuideBookAllKey}장</button>
           </Link>
-        </div>
       ))}
     </div>
   )
