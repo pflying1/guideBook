@@ -29,6 +29,7 @@ const MainBody: React.FC = () => {
     };
     fetchGuideBooks();
   },[]);
+  
   return (
     <div className="mainBodyCss">
       {guideBooks.map((guideBook) => (
