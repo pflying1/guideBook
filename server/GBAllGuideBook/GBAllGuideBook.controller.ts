@@ -1,11 +1,17 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { GBAllGuideBookService } from './GBAllGuideBook.service';
+import { GBAllGuideBook } from './entities/GBAllGuideBook.entity';
 import { CreateGBAllGuideBookDto } from './dto/createGBAllGuideBook.dto';
 import { UpdateGBAllGuideBookDto } from './dto/updateGBAllGuideBook.dto';
 
 @Controller('GBAllGuideBook')
 export class GBAllGuideBookController {
   constructor(private readonly GBAllGuideBookService: GBAllGuideBookService) {}
+  
+  @Get('with-senbakuro')
+  findAllWithSenbakuro(): Promise<GBAllGuideBook[]> {
+    return this.GBAllGuideBookService.findAllWithSenbakuro();
+  }
 
   @Post()
   create(@Body() createGBAllGuideBookDto: CreateGBAllGuideBookDto) {
@@ -17,7 +23,7 @@ export class GBAllGuideBookController {
     return this.GBAllGuideBookService.findAll();
   }
 
-  @Get(':GuideBookAllKey')
+/*   @Get(':GuideBookAllKey')
   findOne(@Param('GuideBookAllKey') GuideBookAllKey: number) {
     return this.GBAllGuideBookService.findOne(+GuideBookAllKey);
   }
@@ -30,5 +36,5 @@ export class GBAllGuideBookController {
   @Delete(':GuideBookAllKey')
   remove(@Param('GuideBookAllKey') GuideBookAllKey: number) {
     return this.GBAllGuideBookService.remove(+GuideBookAllKey);
-  }
+  } */
 }

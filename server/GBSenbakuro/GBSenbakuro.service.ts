@@ -12,6 +12,10 @@ export class GBSenbakuroService {
     private GBSenbakuroRepository: Repository<GBSenbakuro>,
   ) {}
 
+  /* async findByGuideBookAllKey(guideBookAllKey: number): Promise<GBSenbakuro[]> {
+    return this.GBSenbakuroRepository.find({ where: { GuideBookAllKey: guideBookAllKey } });
+  } */
+
   async createGBSenbakuro(GBSenbakuro: CreateGBSenbakuroDto): Promise<GBSenbakuro> {
     const newGBSenbakuro = this.GBSenbakuroRepository.create(GBSenbakuro);
     return await this.GBSenbakuroRepository.save(newGBSenbakuro);
@@ -21,7 +25,7 @@ export class GBSenbakuroService {
     return this.GBSenbakuroRepository.find();
   }
 
-  async findOne(id: number): Promise<GBSenbakuro> {
+  /* async findOne(id: number): Promise<GBSenbakuro> {
     const GBSenbakuro = await this.GBSenbakuroRepository.findOne({where: { GuideBookAllKey:id }});
     if (!GBSenbakuro) {
       throw new NotFoundException('not found');
@@ -43,5 +47,5 @@ export class GBSenbakuroService {
     if (result.affected === 0) {
       throw new NotFoundException(`GBSenbakuro with ID "${id}" not found.`);
     }
-  }
+  } */
 }  
