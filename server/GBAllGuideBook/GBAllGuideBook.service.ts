@@ -12,6 +12,11 @@ export class GBAllGuideBookService {
     private GBAllGuideBookRepository: Repository<GBAllGuideBook>,
   ) {}
 
+  //GBAllGuideBookService에 senbakuronoes를 JOIN을 수행하는 메서드 
+  async findAllWithSenbakuro(): Promise<GBAllGuideBook[]> {
+    return this.GBAllGuideBookRepository.find({ relations: ['senbakuronoes'] });
+  }
+
   async createGBAllGuideBook(GBAllGuideBook: CreateGBAllGuideBookDto): Promise<GBAllGuideBook> {
     const newGBAllGuideBook = this.GBAllGuideBookRepository.create(GBAllGuideBook);
     return await this.GBAllGuideBookRepository.save(newGBAllGuideBook);
@@ -21,7 +26,7 @@ export class GBAllGuideBookService {
     return this.GBAllGuideBookRepository.find();
   }
 
-  async findOne(id: number): Promise<GBAllGuideBook> {
+/*   async findOne(id: number): Promise<GBAllGuideBook> {
     const GBAllGuideBook = await this.GBAllGuideBookRepository.findOne({where: { GuideBookAllKey:id }});
     if (!GBAllGuideBook) {
       throw new NotFoundException('not found');
@@ -43,5 +48,5 @@ export class GBAllGuideBookService {
     if (result.affected === 0) {
       throw new NotFoundException(`GBAllGuideBook with ID "${id}" not found.`);
     }
-  }
+  } */
 }  
