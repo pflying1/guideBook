@@ -26,6 +26,7 @@ export class GBAllGuideBookService {
     return this.GBAllGuideBookRepository.find();
   }
 
+  /* test */
 /*   async findOne(id: number): Promise<GBAllGuideBook> {
     const GBAllGuideBook = await this.GBAllGuideBookRepository.findOne({where: { GuideBookAllKey:id }});
     if (!GBAllGuideBook) {
