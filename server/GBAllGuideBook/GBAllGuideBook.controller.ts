@@ -23,6 +23,7 @@ export class GBAllGuideBookController {
     return this.GBAllGuideBookService.findAll();
   }
 
+  /* test */
 /*   @Get(':GuideBookAllKey')
   findOne(@Param('GuideBookAllKey') GuideBookAllKey: number) {
     return this.GBAllGuideBookService.findOne(+GuideBookAllKey);
@@ -37,4 +38,5 @@ export class GBAllGuideBookController {
   remove(@Param('GuideBookAllKey') GuideBookAllKey: number) {
     return this.GBAllGuideBookService.remove(+GuideBookAllKey);
   } */
+
 }

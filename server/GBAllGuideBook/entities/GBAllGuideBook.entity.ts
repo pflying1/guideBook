@@ -43,3 +43,5 @@ export class GBAllGuideBook {
     this.senbakuronoes = senbakuronoes;
   }
 }
+
+
