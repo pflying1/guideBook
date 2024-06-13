@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, BeforeInsert } from 'typeorm';
 import { GBAllGuideBook } from '../../GBAllGuideBook/entities/GBAllGuideBook.entity';
+import { sanitize } from 'class-sanitizer';
 
 @Entity()
 export class GBSenbakuro {
@@ -30,9 +31,14 @@ export class GBSenbakuro {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => GBAllGuideBook, guideBook => guideBook.senbakuronoes) // 외래 키 컬럼 지정
+  @ManyToOne(() => GBAllGuideBook, guideBook => guideBook.senbakuronoes)
   @JoinColumn({ name: "GuideBookAllKey" })
   guideBook: GBAllGuideBook;
+
+  @BeforeInsert()
+  sanitizeContent() {
+    sanitize(this)
+  }
 
   constructor(
     SenbakuroKey: number,

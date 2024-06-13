@@ -46,7 +46,7 @@ const MajagGuideBody: React.FC = () => {
       <div>
         {guideBooksData.map((guideBook) => (
           <Link to={`/senbakurono/chapter${guideBook.GuideBookAllKey}`} key={guideBook.GuideBookAllKey}>
-            <div>SenbakuroEpisode
+            <div>
               <button className="majagGuideImageButtonCss" style={{ border: "1px solid #457b9d", backgroundColor: "#457b9d", color: "white" }} >
                 {guideBook.GuideBookAllKey}장
               </button>
