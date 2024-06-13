@@ -4,7 +4,7 @@ import { GBAllGuideBook } from './entities/GBAllGuideBook.entity';
 import { CreateGBAllGuideBookDto } from './dto/createGBAllGuideBook.dto';
 import { UpdateGBAllGuideBookDto } from './dto/updateGBAllGuideBook.dto';
 
-@Controller('GBAllGuideBook')
+@Controller('api/GBAllGuideBook')
 export class GBAllGuideBookController {
   constructor(private readonly GBAllGuideBookService: GBAllGuideBookService) {}
   

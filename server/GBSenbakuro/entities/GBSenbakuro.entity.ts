@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, BeforeInsert } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { GBAllGuideBook } from '../../GBAllGuideBook/entities/GBAllGuideBook.entity';
-import { sanitize } from 'class-sanitizer';
+import sanitizeHtml from 'sanitize-html';
 
 @Entity()
 export class GBSenbakuro {
@@ -35,9 +35,14 @@ export class GBSenbakuro {
   @JoinColumn({ name: "GuideBookAllKey" })
   guideBook: GBAllGuideBook;
 
+  //데이터 살균화?
   @BeforeInsert()
+  @BeforeUpdate()
   sanitizeContent() {
-    sanitize(this)
+    this.SenbakuroContents = sanitizeHtml(this.SenbakuroContents);
+    this.SenbakuroTitle = sanitizeHtml(this.SenbakuroTitle);
+    this.SenbakuroCategory = sanitizeHtml(this.SenbakuroCategory);
+    this.SenbakuroEpisode = sanitizeHtml(this.SenbakuroEpisode);
   }
 
   constructor(

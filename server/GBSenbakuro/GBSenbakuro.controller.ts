@@ -3,7 +3,7 @@ import { GBSenbakuroService } from './GBSenbakuro.service';
 import { CreateGBSenbakuroDto } from './dto/createGBSenbakuro.dto';
 import { UpdateGBSenbakuroDto } from './dto/updateGBSenbakuro.dto';
 
-@Controller('GBSenbakuro')
+@Controller('api/GBSenbakuro')
 export class GBSenbakuroController {
   constructor(private readonly GBSenbakuroService: GBSenbakuroService) {}
 

@@ -3,6 +3,9 @@
   height: 1080px;
   background-color: white;
 }
+.senbakuronoWrapCss{
+  margin: 5%;
+}
 .senbaKuronoTitleCss{
   font-size: 100px;
 }

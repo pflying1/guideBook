@@ -29,7 +29,7 @@ const MajagGuideBody: React.FC = () => {
   useEffect(() => {
     const fetchGuideBooks = async () => {
       try {
-        const response = await fetch("http://localhost:8080/GBAllGuideBook/with-senbakuro");
+        const response = await fetch("http://localhost:8080/api/GBAllGuideBook/with-senbakuro");
         const data = await response.json();
         setGuideBooksData(data);
       } catch (error) {
