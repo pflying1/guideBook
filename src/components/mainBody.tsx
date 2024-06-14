@@ -20,7 +20,7 @@ const MainBody: React.FC = () => {
   useEffect(() =>{
     const fetchGuideBooks = async () => {
       try{
-        const response = await fetch("http://localhost:8080/GBAllGuidebook");
+        const response = await fetch("http://localhost:8080/api/GBAllGuidebook");
         const data = await response.json();
         setGuideBooks(data);
       } catch(error) {

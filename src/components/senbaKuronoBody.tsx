@@ -21,7 +21,7 @@ const SenbaKuronoBody: React.FC = () => {
   useEffect(() => {
     const fetchSenbakurono = async () => {
       try {
-        const response = await fetch("http://localhost:8080/GBSenbakuro");
+        const response = await fetch("http://localhost:8080/api/GBSenbakuro");
         const data = await response.json();
         setSenbakuronoData(data);
       } catch (error) {
@@ -38,7 +38,7 @@ const SenbaKuronoBody: React.FC = () => {
     return (
       <div className="senbaKuronoCss">
         {chapterMatchCheck ? (
-          <div>
+          <div className="senbakuronoWrapCss">
             <div className="senbaKuronoTitleCss">{chapterMatchCheck.SenbakuroTitle}</div>
             <div className="senbaKuronoBodyCss" dangerouslySetInnerHTML={{ __html: chapterMatchCheck.SenbakuroContents }} />
           </div>
