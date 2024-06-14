@@ -4,10 +4,11 @@
   background-color: white;
 }
 .senbakuronoWrapCss{
-  margin: 5%;
+  margin-left: 10%;
 }
 .senbaKuronoTitleCss{
   font-size: 100px;
+  margin-bottom: 5%;
 }
 
 .senbaKuronoBodyCss{
