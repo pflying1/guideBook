@@ -6,16 +6,15 @@ import { AppService } from './app.service';
 // import { join } from 'path';
 // import { Servnumber | stringcModule } from '@nestjs/serve-static';
 
-//user 모듈
+// user 모듈
 import { UserModule } from './server/user/user.module';
 import { User } from './server/user/entities/user.entity';
-//GBAllGuideBook 모듈
+// GBAllGuideBook 모듈
 import { GBAllGuideBookModule } from './server/GBAllGuideBook/GBAllGuideBook.module';
 import { GBAllGuideBook } from './server/GBAllGuideBook/entities/GBAllGuideBook.entity';
-//GBSenbakuro 모듈
+// GBSenbakuro 모듈
 import { GBSenbakuroModule } from './server/GBSenbakuro/GBSenbakuro.module';
 import { GBSenbakuro } from './server/GBSenbakuro/entities/GBSenbakuro.entity';
-
 
 @Module({
   imports: [
@@ -34,7 +33,7 @@ import { GBSenbakuro } from './server/GBSenbakuro/entities/GBSenbakuro.entity';
         entities: [User, GBAllGuideBook, GBSenbakuro],
       }),
     }),
-  ],  
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
