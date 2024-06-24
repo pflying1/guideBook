@@ -7,6 +7,7 @@ interface SenbakuronoDataInfo {
   GuideBookAllKey: number;
   SenbakuroTitle: string;
   SenbakuroContents: string;
+  SenbakuroContentsOrder: string;
   SenbakuroCategory: string;
   SenbakuroEpisode: string;
   updatedBy: string;
@@ -30,10 +31,13 @@ const SenbaKuronoBody: React.FC = () => {
     };
     fetchSenbakurono();
   }, []);
-
-    //const chapterMatchCheck = SenbakuronoData.find(item => item.index === chapter);
-    const chapterNumber = chapter ? Number(chapter.replace('chapter', '')) : undefined;
-    const chapterMatchCheck = SenbakuronoData.find(item => item.SenbakuroKey === chapterNumber);
+    //url 에서 #부분 추출
+    const hash = window.location.hash;
+    const hashNumber = hash ? hash.replace('#', '') : undefined
+    //url의 chapter 매개변수에서 '#'를 제거한 값을 추출
+    const chapterNumber = chapter ? chapter.replace('chapter', '') : undefined;
+    // chapterNumber와 hashNumber를 사용하여 해당 항목을 찾음
+    const chapterMatchCheck = SenbakuronoData.find(item => item.GuideBookAllKey === Number(chapterNumber) && item.SenbakuroContentsOrder === hashNumber);
     
     return (
       <div className="senbaKuronoCss">
