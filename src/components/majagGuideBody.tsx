@@ -41,12 +41,12 @@ const MajagGuideBody: React.FC = () => {
 
   return (
     <div className="majagGuideBodyCss">
-      <div>마작 기초 가이드</div>
-      <div>센바 쿠로노 강좌 공부노트</div>
-      <div>
+      <div style={{fontSize: '60px'}}>마작 기초 가이드</div>
+      <div style={{fontSize: '60px'}}>센바 쿠로노 강좌 공부노트</div>
+      <div className="majagGuideWrapCss">
         {guideBooksData.map((guideBook) => (
-          <Link to={`/senbakurono/chapter${guideBook.GuideBookAllKey}`} key={guideBook.GuideBookAllKey}>
-            <div>
+          <Link to={`/senbakurono/chapter${guideBook.GuideBookAllKey}`} key={guideBook.GuideBookAllKey} style={{ textDecoration: 'none', color: 'black' }}>
+            <div className="majagGuideContentWrapCss">
               <button className="majagGuideImageButtonCss" style={{ border: "1px solid #457b9d", backgroundColor: "#457b9d", color: "white" }} >
                 {guideBook.GuideBookAllKey}장
               </button>
