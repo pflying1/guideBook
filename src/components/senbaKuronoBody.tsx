@@ -13,6 +13,7 @@ interface SenbakuronoDataInfo {
   createdAt: string;
   updatedAt: string;
 }
+
 // 이미지 존재 여부를 확인하는 함수
 async function checkImageExists(imageUrl: string): Promise<boolean> {
   try {
@@ -26,6 +27,7 @@ async function checkImageExists(imageUrl: string): Promise<boolean> {
 
 const SenbaKuronoBody: React.FC = () => {
   const [SenbakuronoData, setSenbakuronoData] = useState<SenbakuronoDataInfo[]>([]);
+  const [imageExists, setImageExists] = useState<boolean>(false);
   const { chapter } = useParams<{ chapter: string }>();
   const navigate = useNavigate();
 
@@ -54,47 +56,29 @@ const SenbaKuronoBody: React.FC = () => {
   // chapterNumber와 hashNumber를 사용하여 해당 항목을 찾음
   const chapterMatchCheck = validData.find(item => item.GuideBookAllKey === Number(chapterNumber) && item.SenbakuroContentsOrder === String(hashNumber));
 
-/*   // 현재 챕터의 최대 SenbakuroContentsOrder 값을 계산
-  const maxOrder = Math.max(
-    ...validData
-      .filter(item => item.GuideBookAllKey === Number(chapterNumber))
-      .map(item => Number(item.SenbakuroContentsOrder))
-  ); */
+  // 이미지 파일 경로 생성 함수
+  const getImageUrl = (order: string) => {
+    return `http://localhost:8080/asset/senbakuroEpisode5/senbakurono${order}-1.png`;
+  };
+  
+  //이미지 존재 여부 체크
+  useEffect(() => {
+    if (chapterMatchCheck) {
+      const imageUrl = getImageUrl(chapterMatchCheck.SenbakuroContentsOrder);
+      checkImageExists(imageUrl).then(exists => setImageExists(exists));
+    }
+  }, [chapterMatchCheck]);
 
-/*   // 나중에 모듈로 사용가능
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (chapterNumber && hashNumber) {
         const currentChapter = Number(chapterNumber);
         const currentHash = Number(hashNumber);
 
-        if (event.key === "ArrowRight" && currentHash === maxOrder) {
-          // 오른쪽 키를 누르면 다음 페이지로 이동
-          const nextHash = Math.min(currentHash + 1, maxOrder);
-          navigate(`/senbakurono/chapter${currentChapter}/#${nextHash}`);
-        } else if (event.key === "ArrowLeft" && currentHash < 1) {
-          // 왼쪽 키를 누르면 이전 페이지로 이동
-          if (currentHash > 1) {
-            const prevHash = Math.max(currentHash - 1, 1);
-            navigate(`/senbakurono/chapter${currentChapter}/#${prevHash}`);
-          }
-        }
-      }
-    }; */
-
-  // 나중에 모듈로 사용가능
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (chapterNumber && hashNumber) {
-        const currentChapter = Number(chapterNumber);
-        const currentHash = Number(hashNumber);
-
-        if (event.key === "ArrowRight" ) {
-          // 오른쪽 키를 누르면 다음 페이지로 이동
+        if (event.key === "ArrowRight") {
           const nextHash = currentHash + 1;
           navigate(`/senbakurono/chapter${currentChapter}/#${nextHash}`);
-        } else if (event.key === "ArrowLeft" ) {
-          // 왼쪽 키를 누르면 이전 페이지로 이동
+        } else if (event.key === "ArrowLeft") {
           if (currentHash > 1) {
             const prevHash = currentHash - 1;
             navigate(`/senbakurono/chapter${currentChapter}/#${prevHash}`);
@@ -109,11 +93,6 @@ const SenbaKuronoBody: React.FC = () => {
     };
   }, [chapterNumber, hashNumber, navigate]);
 
-  // 이미지 파일 경로 생성 함수
-  const getImageUrl = (order: string) => {
-    return `http://localhost:8080/asset/senbakuroEpisode5/senbakurono${order}-1.png`;
-  };
-
   return (
     <div className="senbaKuronoCss">
       {chapterMatchCheck ? (
@@ -121,13 +100,18 @@ const SenbaKuronoBody: React.FC = () => {
           {chapterMatchCheck.SenbakuroContentsOrder === '1' ? (
             <div className="senbaKuronoTitleCss">
               {chapterMatchCheck.SenbakuroTitle}
-              <br></br>
+              <br />
               <div className="senbakuronoPressKeyCss">-{'>'} 키를 누르면 다음 페이지로 이동</div>
-              <br></br>
+              <br />
             </div>
           ) : (
             <div>
-              <img src={getImageUrl(chapterMatchCheck.SenbakuroContentsOrder)} alt={`senbakurono${chapterMatchCheck.SenbakuroContentsOrder}`} />
+              {imageExists && (
+                <img
+                  src={getImageUrl(chapterMatchCheck.SenbakuroContentsOrder)}
+                  alt={`senbakurono${chapterMatchCheck.SenbakuroContentsOrder}`}
+                />
+              )}
               <div className="senbaKuronoBodyCss" dangerouslySetInnerHTML={{ __html: chapterMatchCheck.SenbakuroContents }}></div>
             </div>
           )}
