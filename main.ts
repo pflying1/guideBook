@@ -1,4 +1,3 @@
-// main.ts
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as express from 'express';
@@ -12,6 +11,9 @@ async function bootstrap(): Promise<void> {
 
   // 정적 파일 폴더 경로 설정
   app.use(express.static(path.join(__dirname, 'dist')));
+
+  // 정적 파일 폴더 경로 설정 (예: 이미지가 저장된 폴더)
+  app.use('/asset', express.static(join(__dirname, 'src', 'asset')));
 
   // 특정 경로(예: /senbakurono)에 대한 요청을 제외한 모든 요청을 index.html로 리다이렉트
   app.use((req: Request, res: Response, next: NextFunction) => {
