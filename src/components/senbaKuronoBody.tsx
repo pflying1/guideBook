@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 
 interface SenbakuronoDataInfo {
@@ -14,10 +13,20 @@ interface SenbakuronoDataInfo {
   createdAt: string;
   updatedAt: string;
 }
+// 이미지 존재 여부를 확인하는 함수
+async function checkImageExists(imageUrl: string): Promise<boolean> {
+  try {
+    const response = await fetch(imageUrl, { method: 'HEAD' });
+    return response.status === 200;
+  } catch (error: unknown) {
+    console.error(`Error checking image existence: ${(error as Error).message}`);
+    return false;
+  }
+}
 
 const SenbaKuronoBody: React.FC = () => {
   const [SenbakuronoData, setSenbakuronoData] = useState<SenbakuronoDataInfo[]>([]);
-  const { chapter } = useParams<'chapter'>();
+  const { chapter } = useParams<{ chapter: string }>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,55 +41,102 @@ const SenbaKuronoBody: React.FC = () => {
     };
     fetchSenbakurono();
   }, []);
-    //url 에서 #부분 추출
-    const hash = window.location.hash;
-    const hashNumber = hash ? hash.replace('#', '') : undefined
-    //url의 chapter 매개변수에서 '#'를 제거한 값을 추출
-    const chapterNumber = chapter ? chapter.replace('chapter', '') : undefined;
-    // chapterNumber와 hashNumber를 사용하여 해당 항목을 찾음
-    const chapterMatchCheck = SenbakuronoData.find(item => item.GuideBookAllKey === Number(chapterNumber) && item.SenbakuroContentsOrder === hashNumber);
 
-    useEffect(() => {
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (chapterNumber && hashNumber) {
-          const currentChapter = Number(chapterNumber);
-          const currentHash = Number(hashNumber);
-  
-          if (event.key === "ArrowRight") {
-            // 오른쪽 키를 누르면 다음 페이지로 이동
-            const nextHash = currentHash + 1;
-            navigate(`/senbakurono/chapter${currentChapter}/#${nextHash}`);
-          } else if (event.key === "ArrowLeft") {
-            // 왼쪽 키를 누르면 이전 페이지로 이동
-            if (currentHash > 1) {
-              const prevHash = currentHash - 1;
-              navigate(`/senbakurono/chapter${currentChapter}/#${prevHash}`);
-            }
+  // url에서 #부분 추출
+  const hash = window.location.hash;
+  const hashNumber = hash ? hash.replace('#', '') : undefined;
+  // url의 chapter 매개변수에서 'chapter'를 제거한 값을 추출
+  const chapterNumber = chapter ? chapter.replace('chapter', '') : undefined;
+
+  // senbakurokey 수만큼만 유효한 데이터 필터링
+  const validData = SenbakuronoData.filter(item => item.SenbakuroKey && item.SenbakuroContentsOrder);
+
+  // chapterNumber와 hashNumber를 사용하여 해당 항목을 찾음
+  const chapterMatchCheck = validData.find(item => item.GuideBookAllKey === Number(chapterNumber) && item.SenbakuroContentsOrder === String(hashNumber));
+
+/*   // 현재 챕터의 최대 SenbakuroContentsOrder 값을 계산
+  const maxOrder = Math.max(
+    ...validData
+      .filter(item => item.GuideBookAllKey === Number(chapterNumber))
+      .map(item => Number(item.SenbakuroContentsOrder))
+  ); */
+
+/*   // 나중에 모듈로 사용가능
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (chapterNumber && hashNumber) {
+        const currentChapter = Number(chapterNumber);
+        const currentHash = Number(hashNumber);
+
+        if (event.key === "ArrowRight" && currentHash === maxOrder) {
+          // 오른쪽 키를 누르면 다음 페이지로 이동
+          const nextHash = Math.min(currentHash + 1, maxOrder);
+          navigate(`/senbakurono/chapter${currentChapter}/#${nextHash}`);
+        } else if (event.key === "ArrowLeft" && currentHash < 1) {
+          // 왼쪽 키를 누르면 이전 페이지로 이동
+          if (currentHash > 1) {
+            const prevHash = Math.max(currentHash - 1, 1);
+            navigate(`/senbakurono/chapter${currentChapter}/#${prevHash}`);
           }
         }
-      };
-  
-      window.addEventListener("keydown", handleKeyDown);
-      return () => {
-        window.removeEventListener("keydown", handleKeyDown);
-      };
-    }, [chapterNumber, hashNumber, navigate]);
+      }
+    }; */
 
-    return (
-      <div className="senbaKuronoCss">
-        {chapterMatchCheck ? (
-          <div className="senbakuronoWrapCss">
-            {chapterMatchCheck.SenbakuroContentsOrder === '1' ? (
-            <div className="senbaKuronoTitleCss">{chapterMatchCheck.SenbakuroTitle}</div>
-            ):(
-            <div className="senbaKuronoBodyCss" dangerouslySetInnerHTML={{ __html: chapterMatchCheck.SenbakuroContents }} />
+  // 나중에 모듈로 사용가능
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (chapterNumber && hashNumber) {
+        const currentChapter = Number(chapterNumber);
+        const currentHash = Number(hashNumber);
+
+        if (event.key === "ArrowRight" ) {
+          // 오른쪽 키를 누르면 다음 페이지로 이동
+          const nextHash = currentHash + 1;
+          navigate(`/senbakurono/chapter${currentChapter}/#${nextHash}`);
+        } else if (event.key === "ArrowLeft" ) {
+          // 왼쪽 키를 누르면 이전 페이지로 이동
+          if (currentHash > 1) {
+            const prevHash = currentHash - 1;
+            navigate(`/senbakurono/chapter${currentChapter}/#${prevHash}`);
+          }
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [chapterNumber, hashNumber, navigate]);
+
+  // 이미지 파일 경로 생성 함수
+  const getImageUrl = (order: string) => {
+    return `http://localhost:8080/asset/senbakuroEpisode5/senbakurono${order}-1.png`;
+  };
+
+  return (
+    <div className="senbaKuronoCss">
+      {chapterMatchCheck ? (
+        <div className="senbakuronoWrapCss">
+          {chapterMatchCheck.SenbakuroContentsOrder === '1' ? (
+            <div className="senbaKuronoTitleCss">
+              {chapterMatchCheck.SenbakuroTitle}
+              <br></br>
+              <div className="senbakuronoPressKeyCss">-{'>'} 키를 누르면 다음 페이지로 이동</div>
+              <br></br>
+            </div>
+          ) : (
+            <div>
+              <img src={getImageUrl(chapterMatchCheck.SenbakuroContentsOrder)} alt={`senbakurono${chapterMatchCheck.SenbakuroContentsOrder}`} />
+              <div className="senbaKuronoBodyCss" dangerouslySetInnerHTML={{ __html: chapterMatchCheck.SenbakuroContents }}></div>
+            </div>
           )}
-          </div>
-        ) : (
-          <div>해당 장의 내용을 찾을 수 없습니다.</div>
-        )}
-      </div>
-    );
+        </div>
+      ) : (
+        <div>해당 장의 내용을 찾을 수 없습니다.</div>
+      )}
+    </div>
+  );
 };
 
 export default SenbaKuronoBody;

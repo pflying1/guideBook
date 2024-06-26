@@ -51,7 +51,7 @@ const MajagGuideBody: React.FC = () => {
               {guideBook.GuideBookAllKey}장
             </button>
             {guideBook.senbakuronoes.map((senbakuro) => (
-              <Link to={`/senbakurono/chapter${guideBook.GuideBookAllKey}/#${senbakuro.SenbakuroContentsOrder}`} key={senbakuro.SenbakuroKey} style={{ textDecoration: 'none', color: 'black' }}>
+              <Link to={`/senbakurono/chapter${guideBook.GuideBookAllKey}/#1`} key={senbakuro.SenbakuroKey} style={{ textDecoration: 'none', color: 'black' }}>
                 <div className="majagGuideSenbakuroTitleCss">
                   {senbakuro.SenbakuroTitle}
                 </div>
