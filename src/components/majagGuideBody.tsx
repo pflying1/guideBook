@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-interface Senbakuro {
+interface senbakuronoDataInfo {
   SenbakuroKey: number;
   GuideBookAllKey: number;
   SenbakuroTitle: string;
   SenbakuroContents: string;
+  SenbakuroContentsOrder: string;
   SenbakuroCategory: string;
   SenbakuroEpisode: string;
   updatedBy: string;
@@ -20,7 +21,7 @@ interface GuideBookDataInfo {
   updatedBy: string;
   createdAt: string;
   updatedAt: string;
-  senbakuronoes: Senbakuro[];
+  senbakuronoes: senbakuronoDataInfo[];
 }
 
 const MajagGuideBody: React.FC = () => {
@@ -45,18 +46,18 @@ const MajagGuideBody: React.FC = () => {
       <div style={{fontSize: '60px'}}>센바 쿠로노 강좌 공부노트</div>
       <div className="majagGuideWrapCss">
         {guideBooksData.map((guideBook) => (
-          <Link to={`/senbakurono/chapter${guideBook.GuideBookAllKey}`} key={guideBook.GuideBookAllKey} style={{ textDecoration: 'none', color: 'black' }}>
-            <div className="majagGuideContentWrapCss">
-              <button className="majagGuideImageButtonCss" style={{ border: "1px solid #457b9d", backgroundColor: "#457b9d", color: "white" }} >
-                {guideBook.GuideBookAllKey}장
-              </button>
-              {guideBook.senbakuronoes.map((senbakuro) => (
-                <div className="majagGuideSenbakuroTitleCss" key={senbakuro.SenbakuroKey}>
+          <div key={guideBook.GuideBookAllKey} className="majagGuideContentWrapCss">
+            <button className="majagGuideImageButtonCss" style={{ border: "1px solid #457b9d", backgroundColor: "#457b9d", color: "white" }} >
+              {guideBook.GuideBookAllKey}장
+            </button>
+            {guideBook.senbakuronoes.map((senbakuro) => (
+              <Link to={`/senbakurono/chapter${guideBook.GuideBookAllKey}/#${senbakuro.SenbakuroContentsOrder}`} key={senbakuro.SenbakuroKey} style={{ textDecoration: 'none', color: 'black' }}>
+                <div className="majagGuideSenbakuroTitleCss">
                   {senbakuro.SenbakuroTitle}
                 </div>
-              ))}
-            </div>
-          </Link>
+              </Link>
+            ))}
+          </div>
         ))}
       </div>
     </div>

@@ -17,6 +17,9 @@ export class GBSenbakuro {
   SenbakuroContents: string;
 
   @Column({ length: 50 })
+  SenbakuroContentsOrder: string;
+
+  @Column({ length: 50 })
   SenbakuroCategory: string;
 
   @Column({ length: 20, nullable: true })
@@ -50,6 +53,7 @@ export class GBSenbakuro {
     GuideBookAllKey: number,
     SenbakuroTitle: string,
     SenbakuroContents: string,
+    SenbakuroContentsOrder: string,
     SenbakuroCategory: string,
     SenbakuroEpisode: string,
     updatedBy: string,
@@ -61,6 +65,7 @@ export class GBSenbakuro {
     this.GuideBookAllKey = GuideBookAllKey;
     this.SenbakuroTitle = SenbakuroTitle;
     this.SenbakuroContents = SenbakuroContents;
+    this.SenbakuroContentsOrder = SenbakuroContentsOrder;
     this.SenbakuroCategory = SenbakuroCategory;
     this.SenbakuroEpisode = SenbakuroEpisode;
     this.updatedBy = updatedBy;
