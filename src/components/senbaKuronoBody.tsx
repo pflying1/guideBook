@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useImageExists } from "./useImageExists";
 
 interface SenbakuronoDataInfo {
   SenbakuroKey: number;
@@ -14,20 +15,8 @@ interface SenbakuronoDataInfo {
   updatedAt: string;
 }
 
-// 이미지 존재 여부를 확인하는 함수
-async function checkImageExists(imageUrl: string): Promise<boolean> {
-  try {
-    const response = await fetch(imageUrl, { method: 'HEAD' });
-    return response.status === 200;
-  } catch (error: unknown) {
-    console.error(`Error checking image existence: ${(error as Error).message}`);
-    return false;
-  }
-}
-
 const SenbaKuronoBody: React.FC = () => {
   const [SenbakuronoData, setSenbakuronoData] = useState<SenbakuronoDataInfo[]>([]);
-  const [imageExists, setImageExists] = useState<boolean>(false);
   const { chapter } = useParams<{ chapter: string }>();
   const navigate = useNavigate();
 
@@ -60,14 +49,9 @@ const SenbaKuronoBody: React.FC = () => {
   const getImageUrl = (order: string) => {
     return `http://localhost:8080/asset/senbakuroEpisode5/senbakurono${order}-1.png`;
   };
-  
-  //이미지 존재 여부 체크
-  useEffect(() => {
-    if (chapterMatchCheck) {
-      const imageUrl = getImageUrl(chapterMatchCheck.SenbakuroContentsOrder);
-      checkImageExists(imageUrl).then(exists => setImageExists(exists));
-    }
-  }, [chapterMatchCheck]);
+
+  const imageUrl = chapterMatchCheck ? getImageUrl(chapterMatchCheck.SenbakuroContentsOrder) : '';
+  const imageExists = useImageExists(imageUrl);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
