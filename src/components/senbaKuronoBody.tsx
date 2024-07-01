@@ -73,7 +73,7 @@ const SenbaKuronoBody: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [chapterNumber, hashNumber, navigate]);
+  }, [chapterNumber, hashNumber, navigate, validData]);
   
   return (
     <div className="senbaKuronoCss">
