@@ -45,14 +45,6 @@ const SenbaKuronoBody: React.FC = () => {
   // chapterNumber와 hashNumber를 사용하여 해당 항목을 찾음
   const chapterMatchCheck = validData.find(item => item.GuideBookAllKey === Number(chapterNumber) && item.SenbakuroContentsOrder === String(hashNumber));
 
-/*   // 이미지 파일 경로 생성 함수
-  const getImageUrl = (order: string) => {
-    return `http://localhost:8080/asset/senbakuroEpisode5/senbakurono${order}-1.png`;
-  };
-
-  const imageUrl = chapterMatchCheck ? getImageUrl(chapterMatchCheck.SenbakuroContentsOrder) : '';
-  const imageExists = useImageExists(imageUrl); */
-
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (chapterNumber && hashNumber) {
@@ -90,12 +82,6 @@ const SenbaKuronoBody: React.FC = () => {
             </div>
           ) : (
             <div>
-{/*               {imageExists && (
-                <img
-                  src={getImageUrl(chapterMatchCheck.SenbakuroContentsOrder)}
-                  alt={`senbakurono${chapterMatchCheck.SenbakuroContentsOrder}`}
-                />
-              )} */}
               <div className="senbaKuronoBodyCss" dangerouslySetInnerHTML={{ __html: chapterMatchCheck.SenbakuroContents }}></div>
             </div>
           )}
