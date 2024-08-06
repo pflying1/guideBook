@@ -53,11 +53,17 @@ const SenbaKuronoBody: React.FC = () => {
 
         if (event.key === "ArrowRight") {
           const nextHash = currentHash + 1;
+          const nextChapterMatchCheck = validData.find(item => item.GuideBookAllKey === currentChapter && item.SenbakuroContentsOrder === String(nextHash));
+          if(nextChapterMatchCheck){
           navigate(`/senbakurono/chapter${currentChapter}/#${nextHash}`);
+          }
         } else if (event.key === "ArrowLeft") {
           if (currentHash > 1) {
             const prevHash = currentHash - 1;
+            const prevChapterMatchCheck = validData.find(item => item.GuideBookAllKey === currentChapter && item.SenbakuroContentsOrder === String(prevHash));
+            if(prevChapterMatchCheck){
             navigate(`/senbakurono/chapter${currentChapter}/#${prevHash}`);
+            }
           }
         }
       }
@@ -67,8 +73,8 @@ const SenbaKuronoBody: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [chapterNumber, hashNumber, navigate]);
-
+  }, [chapterNumber, hashNumber, navigate, validData]);
+  
   return (
     <div className="senbaKuronoCss">
       {chapterMatchCheck ? (
