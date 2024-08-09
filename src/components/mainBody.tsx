@@ -3,28 +3,22 @@ import { Link } from "react-router-dom";
 import "../styles/main.css";
 import majagpae34 from '../asset/majagpae34.png';
 import apexIntro from '../asset/apexIntro.png';
-
-
-interface GuideBookInfo {
-  GuideBookAllKey: number;
-  GuideBookAllTitle: string;
-  GuideBookAllContents: string | null;
-  updatedBy: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../store';
+import { setGuideBookInfo, fetchFailure } from '../store';
 
 const MainBody: React.FC = () => {
-  const [guideBooks, setGuideBooks] = useState<GuideBookInfo[]>([]);
-
+  const dispatch = useDispatch<AppDispatch>();
+  const { data, error } = useSelector((state: RootState) => state.guideBooks);
   useEffect(() =>{
     const fetchGuideBooks = async () => {
       try{
         const response = await fetch("http://localhost:8080/api/GBAllGuidebook");
         const data = await response.json();
-        setGuideBooks(data);
+        dispatch(setGuideBookInfo(data));
       } catch(error) {
         console.log("데이터를 가져오지 못했습니다.",error);
+        dispatch(fetchFailure('데이터를 가져오지 못했습니다.'));
       }
     };
     fetchGuideBooks();
@@ -32,7 +26,7 @@ const MainBody: React.FC = () => {
   
   return (
     <div className="mainBodyCss">
-      {guideBooks.map((guideBook) => (
+      {data.map((guideBook) => (
         <div key={guideBook.GuideBookAllKey}>
           <div className='mainTitleCss'>{guideBook.GuideBookAllTitle}</div>
           <img 
