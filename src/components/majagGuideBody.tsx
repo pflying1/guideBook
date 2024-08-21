@@ -2,27 +2,14 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
-import { setGuideBooksData, fetchFailure } from '../store';
+import { fetchGuideBooks } from '../store';
 
 const MajagGuideBody: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data = [], error } = useSelector((state: RootState) => state.guideBooks);
 
   useEffect(() => {
-    const fetchGuideBooks = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/GBAllGuideBook/with-senbakuro');
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        dispatch(setGuideBooksData(data));
-      } catch (error) {
-        console.error('데이터를 가져오지 못했습니다.', error);
-        dispatch(fetchFailure('데이터를 가져오지 못했습니다.'));
-      }
-    };
-    fetchGuideBooks();
+    dispatch(fetchGuideBooks());
   }, [dispatch]);
 
   return (

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
-import { setGuideBooksData, fetchFailure } from '../store';
+import { fetchGuideBooks, fetchFailure } from '../store';
 
 const SenbaKuronoBody: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -11,16 +11,7 @@ const SenbaKuronoBody: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchGuideBooks = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/GBAllGuideBook/with-senbakuro');
-        const data = await response.json();
-        dispatch(setGuideBooksData(data));
-      } catch (error) {
-        dispatch(fetchFailure('데이터를 가져오지 못했습니다.'));
-      }
-    };
-    fetchGuideBooks();
+    dispatch(fetchGuideBooks());
   }, [dispatch]);
 
   const hash = window.location.hash;
