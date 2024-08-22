@@ -18,7 +18,7 @@ export class createAuthUsersDto {
   readonly last_name?: string;
 
   @IsOptional()
-  @IsUrl() // Optional URL validation for profile_picture
+  @IsUrl() 
   readonly profile_picture?: string;
 
   @IsOptional()
@@ -29,7 +29,6 @@ export class createAuthUsersDto {
   @IsString()
   readonly refresh_token?: string;
 
-  // Constructor is optional, but if needed, you can define it to set initial values
   constructor(
     google_id: string,
     email: string,
