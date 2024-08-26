@@ -11,32 +11,32 @@ export class updateAuthUsersDto {
 
   @IsOptional()
   @IsString()
-  readonly first_name?: string;
+  readonly first_name: string;
 
   @IsOptional()
   @IsString()
-  readonly last_name?: string;
+  readonly last_name: string;
 
   @IsOptional()
   @IsUrl() 
-  readonly profile_picture?: string;
+  readonly profile_picture: string;
 
   @IsOptional()
   @IsString()
-  readonly access_token?: string;
+  readonly access_token: string;
 
   @IsOptional()
   @IsString()
-  readonly refresh_token?: string;
+  readonly refresh_token: string;
 
   constructor(
     google_id: string,
     email: string,
-    first_name?: string,
-    last_name?: string,
-    profile_picture?: string,
-    access_token?: string,
-    refresh_token?: string
+    first_name: string,
+    last_name: string,
+    profile_picture: string,
+    access_token: string,
+    refresh_token: string
   ) {
     this.google_id = google_id;
     this.email = email;

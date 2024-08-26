@@ -12,19 +12,19 @@ export class authUsers {
   email!: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  first_name?: string;
+  first_name!: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  last_name?: string;
+  last_name!: string;
 
   @Column({ type: 'text', nullable: true })
-  profile_picture?: string;
+  profile_picture!: string;
 
   @Column({ type: 'text', nullable: true })
-  access_token?: string;
+  access_token!: string;
 
   @Column({ type: 'text', nullable: true })
-  refresh_token?: string;
+  refresh_token!: string;
 
   @CreateDateColumn()
   created_at!: Date;
@@ -35,11 +35,11 @@ export class authUsers {
   constructor(
     google_id: string,
     email: string,
-    first_name?: string,
-    last_name?: string,
-    profile_picture?: string,
-    access_token?: string,
-    refresh_token?: string
+    first_name: string,
+    last_name: string,
+    profile_picture: string,
+    access_token: string,
+    refresh_token: string
   ) {
     this.google_id = google_id;
     this.email = email;
