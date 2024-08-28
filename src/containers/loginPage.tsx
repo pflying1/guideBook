@@ -1,12 +1,11 @@
 import React from "react";
 import Logo from "../components/logo"
 import OAuthLogin from "../components/oAuthLogin"
-//import "../styles/LoginPage.css"
+import "../styles/loginPage.css"
 
 const main:React.FC = () => {
   return (
-    //<div className="LoginPageCss">
-    <div>
+    <div className="loginPageCss">
       <Logo />
       <OAuthLogin />
     </div>
