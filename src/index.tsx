@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import reportWebVitals from "./reportWebVitals";
 import Main from "./containers/main";
-import LoginPage from './containers/LoginPage';
+import LoginPage from './containers/loginPage';
 import Page404 from "./containers/page404";
 import MajagGuide from "./containers/majagGuide";
 import SenbaKurono from "./containers/senbaKurono";

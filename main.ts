@@ -2,8 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as express from 'express';
 import { join } from 'path';
-import * as fs from 'fs/promises'; // fs/promises를 사용하여 비동기적으로 파일을 확인합니다.
+import * as fs from 'fs/promises';
 import { type Request, type Response, type NextFunction } from 'express';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
@@ -32,7 +34,11 @@ async function bootstrap(): Promise<void> {
   });
 
   // CORS 설정
-  app.enableCors();
+  app.enableCors({
+    origin: 'http://localhost:8080', // 클라이언트 애플리케이션의 URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+  });
 
   await app.listen(8080);
 }

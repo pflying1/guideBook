@@ -8,14 +8,19 @@ export class JwtAuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = request.headers.authorization?.split(' ')[1];
-
+    
     if (!token) return false;
 
     try {
       const decoded = this.jwtService.verify(token);
       request.user = decoded;
       return true;
-    } catch {
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('JWT verification failed:', error.message);
+      } else {
+        console.error('JWT verification failed:', error);
+      }
       return false;
     }
   }
