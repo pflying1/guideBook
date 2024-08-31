@@ -20,12 +20,22 @@ import { GBSenbakuro } from './server/GBSenbakuro/entities/GBSenbakuro.entity';
 import { AuthUsersModule } from './server/auth/authUsers.module';
 import { authUsers } from './server/auth/entities/authUsers.entity';
 
+//authGuard 
+import { JwtAuthGuard } from './server/auth/jwtAuth.guard';
+import { MixinAuthGuard } from './server/auth/mixinAuth.guard';
+import { APP_GUARD } from '@nestjs/core';
+
+// MixinAuthGuard를 사용하여 JwtAuthGuard를 확장한 새로운 가드 생성
+const JwtAuthGuardWithMixin = MixinAuthGuard(JwtAuthGuard);
+
 @Module({
   imports: [
-    ConfigModule.forRoot(), // 환경 변수를 로드하기 위해 ConfigModule 추가
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule, UserModule, GBAllGuideBookModule, GBSenbakuroModule, AuthUsersModule], // ConfigModule을 imports에 추가
-      inject: [ConfigService], // ConfigService를 TypeOrmModule 설정에 주입
+      imports: [ConfigModule, UserModule, GBAllGuideBookModule, GBSenbakuroModule, AuthUsersModule],
+      inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
         host: configService.get('NAS_DB_HOST'),
@@ -39,6 +49,12 @@ import { authUsers } from './server/auth/entities/authUsers.entity';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    /* {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuardWithMixin, // 전역 가드 설정
+    }, */
+  ],
 })
 export class AppModule {}

@@ -11,12 +11,12 @@ export class AuthUsersService {
     @InjectRepository(authUsers)
     private usersRepository: Repository<authUsers>,
     private jwtService: JwtService,
-    private configService: ConfigService, // ConfigService 주입
+    private configService: ConfigService,
   ) {}
 
   async createJwtToken(user: authUsers): Promise<string> {
     const payload = { email: user.email, sub: user.id };
-    const secret = this.configService.get<string>('JWT_SECRET'); // 환경변수에서 비밀키 가져오기
+    const secret = this.configService.get<string>('JWT_SECRET');
     return this.jwtService.sign(payload, { secret });
   }
 
