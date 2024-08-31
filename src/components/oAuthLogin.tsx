@@ -7,8 +7,12 @@ const OAuthLogin: React.FC = () => {
 
   return (
     <div className='loginMainCss'>
-      <h2>Login</h2>
-      <button onClick={handleGoogleLogin}>Google Login</button>
+      <div>Login</div>
+      <br />
+      <br />
+      <button className="loginGoogleImageButtonCss" onClick={handleGoogleLogin}></button>
+      <br />
+      <div>현재 구글 로그인만 구현되어 있습니다.</div>
     </div>
   );
 };
