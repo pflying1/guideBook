@@ -37,3 +37,12 @@ export class UserController {
     return req.user;
   }
 }
+
+@Controller('secure')
+export class AuthSecureController {
+  @Get('data')
+  @UseGuards(JwtAuthGuard)
+  getSecureData() {
+    return { message: 'This is a secure endpoint' };
+  }
+}

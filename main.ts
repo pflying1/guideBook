@@ -5,6 +5,10 @@ import { join } from 'path';
 import * as fs from 'fs/promises';
 import { type Request, type Response, type NextFunction } from 'express';
 import * as dotenv from 'dotenv';
+import { JwtAuthGuard } from './server/auth/jwtAuth.guard';
+import { JwtService } from '@nestjs/jwt';
+import { Reflector } from '@nestjs/core';
+
 dotenv.config();
 
 async function bootstrap(): Promise<void> {
@@ -32,6 +36,9 @@ async function bootstrap(): Promise<void> {
       res.sendFile(join(__dirname, 'dist', 'index.html'));
     }
   });
+
+  // JWT 인증 가드를 글로벌 가드로 설정
+  app.useGlobalGuards(new JwtAuthGuard(app.get(JwtService), app.get(Reflector)));
 
   // CORS 설정
   app.enableCors({

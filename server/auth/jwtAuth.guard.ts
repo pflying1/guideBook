@@ -1,27 +1,28 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Reflector } from '@nestjs/core';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService, private readonly reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const token = request.headers.authorization?.split(' ')[1];
+    const request = context.switchToHttp().getRequest<Request>();
     
-    if (!token) return false;
+    const token = request.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+      throw new UnauthorizedException('No token provided');
+    }
 
     try {
       const decoded = this.jwtService.verify(token);
       request.user = decoded;
       return true;
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('JWT verification failed:', error.message);
-      } else {
-        console.error('JWT verification failed:', error);
-      }
-      return false;
+      console.error('JWT verification failed:', error instanceof Error ? error.message : error);
+      throw new UnauthorizedException('Invalid token');
     }
   }
 }

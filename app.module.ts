@@ -16,15 +16,15 @@ import { GBAllGuideBook } from './server/GBAllGuideBook/entities/GBAllGuideBook.
 import { GBSenbakuroModule } from './server/GBSenbakuro/GBSenbakuro.module';
 import { GBSenbakuro } from './server/GBSenbakuro/entities/GBSenbakuro.entity';
 
-//authUsers 모듈
+// authUsers 모듈
 import { AuthUsersModule } from './server/auth/authUsers.module';
 import { authUsers } from './server/auth/entities/authUsers.entity';
 
-//authGuard 
+// authGuard
 import { JwtAuthGuard } from './server/auth/jwtAuth.guard';
 import { MixinAuthGuard } from './server/auth/mixinAuth.guard';
 import { APP_GUARD } from '@nestjs/core';
-
+import { JwtModule } from '@nestjs/jwt';
 // MixinAuthGuard를 사용하여 JwtAuthGuard를 확장한 새로운 가드 생성
 const JwtAuthGuardWithMixin = MixinAuthGuard(JwtAuthGuard);
 
@@ -44,17 +44,14 @@ const JwtAuthGuardWithMixin = MixinAuthGuard(JwtAuthGuard);
         password: configService.get('NAS_DB_PASSWORD'),
         database: configService.get('NAS_DB_NAME'),
         synchronize: false,
-        entities: [User, GBAllGuideBook, GBSenbakuro, authUsers],
+        entities: [User, GBAllGuideBook, GBSenbakuro],
       }),
     }),
+    AuthUsersModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    /* {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuardWithMixin, // 전역 가드 설정
-    }, */
   ],
 })
 export class AppModule {}
