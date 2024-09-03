@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 const OAuthLogin: React.FC = () => {
+  const dispatch = useDispatch();
+
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:8080/api/auth/google/login';
   };

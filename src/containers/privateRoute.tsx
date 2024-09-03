@@ -5,10 +5,9 @@ import { RootState } from '../store';
 
 interface PrivateRouteProps {
   element: React.ReactElement;
-  path: string;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ element, path }) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   if (!isAuthenticated) {

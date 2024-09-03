@@ -44,10 +44,10 @@ const JwtAuthGuardWithMixin = MixinAuthGuard(JwtAuthGuard);
         password: configService.get('NAS_DB_PASSWORD'),
         database: configService.get('NAS_DB_NAME'),
         synchronize: false,
-        entities: [User, GBAllGuideBook, GBSenbakuro],
+        entities: [User, GBAllGuideBook, GBSenbakuro, authUsers],
       }),
     }),
-    AuthUsersModule,
+    AuthUsersModule, // AuthUsersModule을 imports에 추가
   ],
   controllers: [AppController],
   providers: [

@@ -1,10 +1,34 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState, DecodedToken } from './authUsersTypes'; 
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { AuthState, DecodedToken } from './authUsersTypes';
 import { oAuthLogin } from './authUsersThunks';
 import { jwtDecode } from 'jwt-decode';
 
+export const checkAuthentication = createAsyncThunk(
+  'auth/checkAuthentication',
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = jwtDecode<DecodedToken>(token);
+        const { exp } = decoded;
+        if (exp < Date.now() / 1000) { 
+          throw new Error('Token expired');
+        }
+        console.log('Token is valid, decoded:', decoded);
+        return { token, user: decoded };
+      } catch (error) {
+        console.error('Error during token validation:', error);
+        return rejectWithValue('Invalid or expired token');
+      }
+    } else {
+      console.warn('No token found');
+      return rejectWithValue('No token found');
+    }
+  }
+);
+
 const initialState: AuthState = {
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem('token') || null,
   status: 'idle',
   error: null,
   isAuthenticated: false,
@@ -18,46 +42,37 @@ const authUsersSlice = createSlice({
     setToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
       state.isAuthenticated = true;
-      state.error = null;
       localStorage.setItem('token', action.payload);
-    },
-    setAuthStatus(state, action: PayloadAction<'idle' | 'loading' | 'succeeded' | 'failed'>) {
-      state.status = action.payload;
-    },
-    setAuthError(state, action: PayloadAction<string | null>) {
-      state.error = action.payload;
-    },
-    loginSuccess: (state, action) => {
-      state.isAuthenticated = true;
-      state.token = action.payload.token;
-      state.user = action.payload.user;
-      localStorage.setItem('token', action.payload.token); // 로그인 성공 시 토큰을 로컬 스토리지에 저장합니다.
     },
     logout: (state) => {
       state.isAuthenticated = false;
       state.token = null;
       state.user = null;
-      localStorage.removeItem('token'); // 로그아웃 시 토큰을 로컬 스토리지에서 제거합니다.
-    },
-    checkAuthentication: (state) => {
-      const token = state.token;
-      if (token) {
-        try {
-          const decoded = jwtDecode<DecodedToken>(token as string);
-          const { exp } = decoded;
-          state.isAuthenticated = true;
-        } catch (e) {
-          state.isAuthenticated = false;
-          state.token = null;
-          localStorage.removeItem('token');
-        }
-      } else {
-        state.isAuthenticated = false;
-      }
+      localStorage.removeItem('token');
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(checkAuthentication.pending, (state) => {
+        state.status = 'loading';
+        console.log('checkAuthentication pending');
+      })
+      .addCase(checkAuthentication.fulfilled, (state, action: PayloadAction<{ token: string, user: DecodedToken }>) => {
+        console.log('checkAuthentication fulfilled with:', action.payload);
+        state.status = 'succeeded';
+        state.isAuthenticated = true;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
+      })
+      .addCase(checkAuthentication.rejected, (state, action) => {
+        console.error('checkAuthentication rejected with:', action.payload);
+        state.status = 'failed';
+        state.isAuthenticated = false;
+        state.token = null;
+        state.user = null;
+        localStorage.removeItem('token');
+        state.error = action.payload as string;
+      })
       .addCase(oAuthLogin.pending, (state) => {
         state.status = 'loading';
         state.error = null;
@@ -74,5 +89,5 @@ const authUsersSlice = createSlice({
   },
 });
 
-export const { setToken, setAuthStatus, setAuthError, loginSuccess, logout, checkAuthentication } = authUsersSlice.actions;
+export const { setToken, logout } = authUsersSlice.actions;
 export default authUsersSlice.reducer;
