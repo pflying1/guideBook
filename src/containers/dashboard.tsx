@@ -18,7 +18,7 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <p>Welcome, {user.name}!</p> {/* 사용자 이름을 표시 */}
+      <p>Welcome, {user.name ? user.name : 'User'}!</p> {/* 사용자 이름을 표시 */}
       <button onClick={handleLogout}>Logout</button>
     </div>
   );

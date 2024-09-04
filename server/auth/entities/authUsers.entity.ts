@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity() 
+@Entity()
 export class authUsers {
   @PrimaryGeneratedColumn()
   id!: number;

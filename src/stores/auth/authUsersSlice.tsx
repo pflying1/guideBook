@@ -1,31 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState, DecodedToken } from './authUsersTypes';
-import { oAuthLogin } from './authUsersThunks';
-import { jwtDecode } from 'jwt-decode';
-
-export const checkAuthentication = createAsyncThunk(
-  'auth/checkAuthentication',
-  async (_, { rejectWithValue }) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      try {
-        const decoded = jwtDecode<DecodedToken>(token);
-        const { exp } = decoded;
-        if (exp < Date.now() / 1000) { 
-          throw new Error('Token expired');
-        }
-        console.log('Token is valid, decoded:', decoded);
-        return { token, user: decoded };
-      } catch (error) {
-        console.error('Error during token validation:', error);
-        return rejectWithValue('Invalid or expired token');
-      }
-    } else {
-      console.warn('No token found');
-      return rejectWithValue('No token found');
-    }
-  }
-);
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AuthState, DecodedToken } from './authUsersTypes'; // Correctly import DecodedToken
+import { oAuthLogin, checkAuthentication } from './authUsersThunks';
 
 const initialState: AuthState = {
   token: localStorage.getItem('token') || null,
@@ -44,7 +19,7 @@ const authUsersSlice = createSlice({
       state.isAuthenticated = true;
       localStorage.setItem('token', action.payload);
     },
-    logout: (state) => {
+    logout(state) {
       state.isAuthenticated = false;
       state.token = null;
       state.user = null;
@@ -55,17 +30,14 @@ const authUsersSlice = createSlice({
     builder
       .addCase(checkAuthentication.pending, (state) => {
         state.status = 'loading';
-        console.log('checkAuthentication pending');
       })
-      .addCase(checkAuthentication.fulfilled, (state, action: PayloadAction<{ token: string, user: DecodedToken }>) => {
-        console.log('checkAuthentication fulfilled with:', action.payload);
+      .addCase(checkAuthentication.fulfilled, (state, action: PayloadAction<{ token: string; user: DecodedToken }>) => {
         state.status = 'succeeded';
         state.isAuthenticated = true;
         state.token = action.payload.token;
         state.user = action.payload.user;
       })
       .addCase(checkAuthentication.rejected, (state, action) => {
-        console.error('checkAuthentication rejected with:', action.payload);
         state.status = 'failed';
         state.isAuthenticated = false;
         state.token = null;
@@ -80,6 +52,7 @@ const authUsersSlice = createSlice({
       .addCase(oAuthLogin.fulfilled, (state, action: PayloadAction<string>) => {
         state.token = action.payload;
         state.status = 'succeeded';
+        state.isAuthenticated = true;
         state.error = null;
       })
       .addCase(oAuthLogin.rejected, (state, action) => {

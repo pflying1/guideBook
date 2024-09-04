@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import * as express from 'express';
 import { join } from 'path';
 import * as fs from 'fs/promises';
-import { type Request, type Response, type NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import * as dotenv from 'dotenv';
 import { JwtAuthGuard } from './server/auth/jwtAuth.guard';
 import { JwtService } from '@nestjs/jwt';
@@ -28,15 +28,6 @@ async function bootstrap(): Promise<void> {
     }
   });
 
-  // 특정 경로(예: /api)에 대한 요청을 제외한 모든 요청을 index.html로 리다이렉트
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    if (req.path.startsWith('/api')) {
-      next();
-    } else {
-      res.sendFile(join(__dirname, 'dist', 'index.html'));
-    }
-  });
-
   // JWT 인증 가드를 글로벌 가드로 설정
   app.useGlobalGuards(new JwtAuthGuard(app.get(JwtService), app.get(Reflector)));
 
@@ -45,6 +36,15 @@ async function bootstrap(): Promise<void> {
     origin: 'http://localhost:8080', // 클라이언트 애플리케이션의 URL
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Authorization',
+  });
+
+  // 특정 경로(예: /api)에 대한 요청을 제외한 모든 요청을 index.html로 리다이렉트
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (req.path.startsWith('/api')) {
+      next();
+    } else {
+      res.sendFile(join(__dirname, 'dist', 'index.html'));
+    }
   });
 
   await app.listen(8080);

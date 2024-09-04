@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider, useDispatch, useSelector } from 'react-redux';
@@ -10,18 +10,16 @@ import Page404 from './containers/page404';
 import MajagGuide from './containers/majagGuide';
 import SenbaKurono from './containers/senbaKurono';
 import Dashboard from './containers/dashboard';
-import { checkAuthentication } from './stores/auth/authUsersSlice';
 import PrivateRoute from './containers/privateRoute'; // Import PrivateRoute
+import { checkAuthentication } from './stores/auth/authUsersThunks';
 
 function Index() {
   const dispatch = useDispatch();
-  const { isAuthenticated, status } = useSelector((state: RootState) => state.auth);
+  const { status } = useSelector((state: RootState) => state.auth);
 
   React.useEffect(() => {
     dispatch(checkAuthentication() as any);
   }, [dispatch]);
-
-  console.log('Index component - isAuthenticated:', isAuthenticated); // 로그 추가
 
   if (status === 'loading') {
     return <div>Loading...</div>;
@@ -38,7 +36,7 @@ function Index() {
           />
           <Route 
             path="/"
-            element={<PrivateRoute element={<Main />} />}
+            element={<Main />}
           />
           <Route path="/page404" element={<Page404 />} />
           <Route 
@@ -64,16 +62,11 @@ function Index() {
   );
 }
 
-const rootElement = document.getElementById('root') as HTMLElement;
-if (rootElement) {
-  const root = createRoot(rootElement);
-  root.render(
-    <Provider store={store}>
-      <Index />
-    </Provider>
-  );
-} else {
-  console.error('Root element not found');
-}
+const root = createRoot(document.getElementById('root')!);
+root.render(
+  <Provider store={store}>
+    <Index />
+  </Provider>
+);
 
 reportWebVitals();

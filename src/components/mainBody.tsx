@@ -9,6 +9,8 @@ import { RootState, AppDispatch, fetchMainGuideBooks } from '../store';
 const MainBody: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data, error } = useSelector((state: RootState) => state.guideBooks);
+  const url = new URL(window.location.href);
+  const token = url.searchParams.get('token');
 
   useEffect(() => {
     dispatch(fetchMainGuideBooks());
@@ -45,7 +47,7 @@ const MainBody: React.FC = () => {
             {/* 페이지 링크 지정 */}
             <Link to={
               guideBook.GuideBookAllTitle === 'Majak' 
-                ? '/majagGuide' 
+                ? `/majagGuide?token=${token}`
                 : guideBook.GuideBookAllTitle === 'ApexLegend' 
                 ? '/ApexLegendGuide' 
                 : '/page404'}> 
