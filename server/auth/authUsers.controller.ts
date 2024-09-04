@@ -15,8 +15,7 @@ export class AuthController {
   @Get('login')
   @UseGuards(GoogleAuthGuard)
   async googleLogin(@Req() req: Request) {
-    // Google 인증을 위한 엔드포인트
-    // 실제로는 이 메서드가 호출되지 않고, GoogleAuthGuard가 Google 인증 페이지로 리디렉션합니다.
+
   }
 
   @Get('callback')
