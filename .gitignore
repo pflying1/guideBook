@@ -2,8 +2,6 @@
 .env
 /dist/
 /public/
-/.github/
-Dockerfile
 .dockerignore
 /server/test/
 /src/test/
